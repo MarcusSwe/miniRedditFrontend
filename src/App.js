@@ -40,9 +40,12 @@ function loginUser() {
   async function fetchLogin(){
     const resp = await fetch('http://localhost:8080/user/login', {
       method: 'POST',
-      headers: ({
-       'username': user,
-       'password': password
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name:user,
+        password: password
       })
     })
     const tokenstring = await resp.text();
@@ -62,7 +65,11 @@ function logoffUser(){
     if(token.length>1){
     const resp = await fetch('http://localhost:8080/user/logout', {
       method: 'POST',
-      headers: { 'token': token }
+      headers: { 'Content-Type': 'application/json' }, 
+      body: JSON.stringify({
+        token: token, 
+        name: user
+      })
      }) 
      setToken("");
      setLoggedIn("not logged in");     
