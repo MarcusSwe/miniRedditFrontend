@@ -97,11 +97,18 @@ useEffect(() => {
 function changeBackgroundClassName() {  
   if(background){
       background = false;
-      return `postWrapper postWrapperBackgroundOne`
+      return `fontX postWrapper postWrapperBackgroundOne`
     } else {      
       background = true;
-      return `postWrapper postWrapperBackgroundTwo` 
+      return `fontX postWrapper postWrapperBackgroundTwo` 
   }
+}
+
+function cutMessage(y){
+    let message = y;
+    let lenghtX = 25;
+    let trimmedMessage = message.substring(0, lenghtX)
+    return trimmedMessage+"...";
 }
 
 
@@ -113,7 +120,7 @@ function changeBackgroundClassName() {
     <button className="fontX" onClick={e =>{loginUser()}}>Login</button><button className="fontX" onClick={e =>{addUser()}}>Register </button>
     <button className="fontX" onClick={e =>{logoffUser()}}>log off</button>{loggedIn} </b>  
       </div>     
-      {posts.map((p,index) => <div key={p.id} index={index} className={changeBackgroundClassName()}>{p.title}</div>)}
+      {posts.map((p,index) => <div key={p.id} index={index} className={changeBackgroundClassName()}><b className="voteSize">{p.upvote}</b> <button className="buttonVote"> 	&#x21E7; </button> <b className="voteSize"> {p.downvote} </b> <button className="buttonVote">&#x21E9; </button>  <b className="titleX">{p.title} </b>  <b className="authorX">{p.author}</b> {cutMessage(p.message)}</div>)}
     </div>
   );
 }
