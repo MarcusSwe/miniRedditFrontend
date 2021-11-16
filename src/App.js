@@ -8,6 +8,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState("not logged in");
   const [token, setToken] = useState("");
   const [posts, setPosts] = useState([]);
+  let background = false;
 
 
   
@@ -93,16 +94,26 @@ useEffect(() => {
     getPosts();  
 }, []);
 
+function changeBackgroundClassName() {  
+  if(background){
+      background = false;
+      return `postWrapper postWrapperBackgroundOne`
+    } else {      
+      background = true;
+      return `postWrapper postWrapperBackgroundTwo` 
+  }
+}
+
 
   return (
     <div >
-     <div>
-    Name: <input type="text" name="username" onChange={e => {setUser(e.target.value)}}/>
+     <div className="fontX"><a href="https://fontmeme.com/graffiti-creator/"><img src="https://fontmeme.com/permalink/211116/662e47978ea0ad4aa807207649683392.png" alt="graffiti-creator" border="0"/></a>
+   <b className="moveUp"> Name: <input type="text" name="username" onChange={e => {setUser(e.target.value)}}/>
     Password: <input type="text" name="username" onChange={e => {setPassword(e.target.value)}}/>
-    <button onClick={e =>{loginUser()}}>Login</button><button onClick={e =>{addUser()}}>Register </button>
-    <button onClick={e =>{logoffUser()}}>log off</button>{loggedIn}   
+    <button className="fontX" onClick={e =>{loginUser()}}>Login</button><button className="fontX" onClick={e =>{addUser()}}>Register </button>
+    <button className="fontX" onClick={e =>{logoffUser()}}>log off</button>{loggedIn} </b>  
       </div>     
-      {posts.map((p,index) => <div key={p.id} index={index} className="postWrapper">{p.title}</div>)}
+      {posts.map((p,index) => <div key={p.id} index={index} className={changeBackgroundClassName()}>{p.title}</div>)}
     </div>
   );
 }
