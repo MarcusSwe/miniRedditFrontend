@@ -73,3 +73,11 @@ input {
   position: relative;
   bottom: 5px;
 }
+
+.readButton {
+  position: relative;
+  float: right;
+  top: 10px;
+  font-family: 'Allan';
+  font-size: 20px;
+}
