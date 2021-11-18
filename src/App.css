@@ -8,6 +8,21 @@
   min-height: 50px;
 }
 
+.postWrapper2 {
+  border: solid;
+  border-radius: 5px;
+  box-shadow: darkblue 4px 4px;
+  color: rgb(159, 170, 241);
+  border-color: rgb(0, 0, 0);
+  margin: 15px;
+  min-height: 150px;
+  max-width: 720px;
+  position: relative;
+  
+  background-color: rgb(108, 13, 216);
+}
+
+
 .postWrapperBackgroundOne {
   background-color: rgb(69, 69, 199);
 }
@@ -56,6 +71,39 @@ input {
   color:rgb(22, 22, 44)
 }
 
+
+.titleX2 {
+  padding-left: 35px;
+  font-size: 35px;
+  position:relative;  
+  top:5px;
+}
+
+.authorX2 {
+  font-size: 25px;
+  padding-left: 40px;
+  padding-right: 95px;
+  position:relative;
+  color:rgb(22, 22, 44);
+  top:46px;
+  right:100px;
+  
+}
+
+.dateZ {
+  position: relative;
+  top: 90px;
+  right: 254px;
+  font-size: 12px;
+  color: black;
+}
+
+.messageZ {
+  position: relative;
+  right:200px;
+  top:35px;
+}
+
 .moveUp {
   position: relative;
   bottom: 6px;
@@ -80,4 +128,19 @@ input {
   top: 10px;
   font-family: 'Allan';
   font-size: 20px;
+}
+
+.dateY {
+  position: relative;
+  top: 14px;
+  right: 345px;
+  font-size: 12px;
+  color: black;
+}
+
+.commentDate {
+  position: relative;
+  top: 14px;
+  right: 60px;
+  font-size: 12px;
 }
