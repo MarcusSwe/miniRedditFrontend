@@ -9,6 +9,8 @@ export default function PostSida(props){
     const [upvote, setUpvote] = useState();
     const [downvote, setDownvote] = useState();
     const [omegaHook, callOmegaHook] = useState(true);    
+    const [newCommentX, setNewComment] = useState(false);
+    const [newAddComment, setAddComment] = useState("");
     let background = false;
 
     const yesGo = () => {
@@ -52,7 +54,55 @@ export default function PostSida(props){
     }
     useEffect(() => {  
         getPost();  
-    }, [omegaHook]);        
+    }, [omegaHook]);          
+
+    function newComment(){        
+        setNewComment(!newCommentX)       
+    }
+
+    function addComment(){
+        if(newAddComment.length >0){        
+            const dateX = new Date();
+            async function fetchCreate(){
+             const resp = await fetch('http://localhost:8080/post/newcomment', {
+                method: 'POST',
+                headers: { 'token': props.token,
+                'id': props.id,
+                'Content-Type': 'application/json'
+            },
+                body: JSON.stringify({                
+                commentAuthor: props.user,                
+                comment: newAddComment,
+                date: dateX
+                })
+            })
+            const stringrespons = await resp.text();
+            switch(resp.status) {
+                case 409:         
+                  alert(stringrespons)
+                break;
+                case 500:
+                alert(stringrespons)
+                break;
+            default:                   
+                return alert(stringrespons)         
+            }     
+        } 
+        fetchCreate(); 
+        } else alert("No message!"); 
+    }
+
+   function newC(i) {
+        if(i){
+            return (<div className={newC()} > 
+            <div className="newCommentWrapper">
+            <textarea maxlength="700" placeholder="Message..." className="newPostMessage" onChange={e => {setAddComment(e.target.value)}}>{newAddComment}</textarea>
+           <br/>
+           <button onClick={e => {addComment()}}> Submit</button>
+           </div>
+             </div>)
+        } else return ``
+    }
 
     return (
         <div>  
@@ -68,7 +118,10 @@ export default function PostSida(props){
            <span className="dateZ">{props.sendPost.date}</span>
            <span className="messageZ">{props.sendPost.message}</span>
 
-            </div>            
+            </div>     
+            <button onClick={e => {newComment()}}>new comment</button>      
+
+            {newC(newCommentX)}
 
              {comments.map((p,index) => <div key={p.id} index={index} className={changeBackgroundClassName()}>            
            <b className="titleX"> {p.commentAuthor} </b>
