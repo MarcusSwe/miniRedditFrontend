@@ -11,13 +11,14 @@ export default function PostSida(props){
     const [omegaHook, callOmegaHook] = useState(true);    
     const [newCommentX, setNewComment] = useState(false);
     const [newAddComment, setAddComment] = useState("");
-    const [updatePost, setUpdatePost] = useState("");
-    const [updatePostTitle, setUpdatePostTitle] = useState("");
+    const [updatePost, setUpdatePost] = useState(props.sendPost.message);
+    const [updatePostTitle, setUpdatePostTitle] = useState(props.sendPost.title);
     const [updateComment, setUpdateComment] = useState("");
-    const [messageY, setMessageY] = useState("");
-    const [titleY, setTitleY] = useState("");
     const [idY, setIdY] = useState();
     let background = false;
+
+  console.log("ddddddddddddddddddddddddddddddddddddddd")
+
 
     const yesGo = () => {
         callOmegaHook(!omegaHook);
@@ -38,7 +39,7 @@ export default function PostSida(props){
         
          }
         useEffect(() => {  
-            getComments();              
+            getComments();                         
         }, []);         
 
     function changeBackgroundClassName() {  
@@ -64,7 +65,7 @@ export default function PostSida(props){
         method: 'GET'    
         })
         .then(resp => resp.json())
-        .then(data =>{setUpvote(data.upvote);setDownvote(data.downvote);setMessageY(data.message);setTitleY(data.title);setIdY(data.id)});
+        .then(data =>{setUpvote(data.upvote);setDownvote(data.downvote);setIdY(data.id)});
     }
     useEffect(() => {  
         getPost();  
@@ -100,7 +101,8 @@ export default function PostSida(props){
                 break;
             default:                   
                 return alert(stringrespons)         
-            }     
+            }             
+            yesGo();
         } 
         fetchCreate();        
         } else alert("No message!"); 
@@ -108,17 +110,13 @@ export default function PostSida(props){
 
     
     function updatePost2(){   
-    
-        if(updatePostTitle === ""){     
-            setUpdatePostTitle(titleY);
-        } 
-        if(updatePost === ""){
-            setUpdatePost(messageY);            
-        }
 
-        if(updatePostTitle.length >1 && updatePost.length > 1){
+    
+        if(updatePost.length >2 && updatePostTitle.length >2){
 
             async function fetchCreate(){          
+
+                console.log("2222222222222222222222222222222")
 
              const resp = await fetch('http://localhost:8080/post/updatepost', {
                 method: 'PUT',
@@ -281,10 +279,11 @@ export default function PostSida(props){
             <b className="voteSize"> {downvote} </b>
             <DownVoteX token={props.token} id={props.id} yesGo={yesGo} />
 
-           <textarea readOnly={openTextArea(props.user)} className="titleX2" onChange={e => {setUpdatePostTitle(e.target.value)}}>{props.sendPost.title}</textarea>
+           <textarea value={updatePostTitle} readOnly={openTextArea(props.user)} className="titleX2" onChange={e => {setUpdatePostTitle(e.target.value)}}>{props.sendPost.title}</textarea>
            <span className="authorX2">{props.sendPost.author}</span>
            <span className="dateZ">{props.sendPost.date}</span>
-           <textarea maxlength="700" readOnly={openTextArea(props.user)} className="editPostM" onChange={e => {setUpdatePost(e.target.value)}}>{props.sendPost.message}</textarea>
+           <textarea value={updatePost} maxlength="700" readOnly={openTextArea(props.user)} className="editPostM" onChange={e => {setUpdatePost(e.target.value)}}>{props.sendPost.message}</textarea>
+          
 
             </div>     
             <button onClick={e => {newComment()}}>new comment</button>      
