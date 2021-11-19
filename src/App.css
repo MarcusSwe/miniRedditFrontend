@@ -54,6 +54,30 @@ min-height: 27px;
   display: block;
 }
 
+.editPostM {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  word-wrap: break-word;
+  resize: none;
+  border:none;
+  outline:none;
+
+  width: 620px;
+  height: 170px;
+  background-color: rgb(108, 13, 216);
+}
+
+.editPostComment {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  word-wrap: break-word;
+  resize: none;
+  border:none;
+  outline:none;
+  width: 900px;
+}
 
 input {
   background-color:rgb(102, 104, 241) ;
@@ -83,10 +107,20 @@ input {
 
 
 .titleX2 {
-  padding-left: 35px;
+  overflow: hidden;
   font-size: 35px;
   position:relative;  
   top:5px;
+  background-color: rgb(108, 13, 216);
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  word-wrap: break-word;
+  resize: none;
+  border:none;
+  outline:none;
+  height: 34px;
+
 }
 
 .authorX2 {

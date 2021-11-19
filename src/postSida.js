@@ -11,6 +11,12 @@ export default function PostSida(props){
     const [omegaHook, callOmegaHook] = useState(true);    
     const [newCommentX, setNewComment] = useState(false);
     const [newAddComment, setAddComment] = useState("");
+    const [updatePost, setUpdatePost] = useState("");
+    const [updatePostTitle, setUpdatePostTitle] = useState("");
+    const [updateComment, setUpdateComment] = useState("");
+    const [messageY, setMessageY] = useState("");
+    const [titleY, setTitleY] = useState("");
+    const [idY, setIdY] = useState();
     let background = false;
 
     const yesGo = () => {
@@ -45,12 +51,20 @@ export default function PostSida(props){
             }
         }  
   
+        function changeBackgroundClassName2() {  
+            if(background){                    
+                    return `editPostComment postWrapperBackgroundTwo`
+                  } else {                      
+                    return `editPostComment postWrapperBackgroundOne` 
+                }
+            }  
+
     function getPost(){
         fetch('http://localhost:8080/post/' +props.id, {
         method: 'GET'    
         })
         .then(resp => resp.json())
-        .then(data =>{setUpvote(data.upvote);setDownvote(data.downvote);console.log(data)});
+        .then(data =>{setUpvote(data.upvote);setDownvote(data.downvote);setMessageY(data.message);setTitleY(data.title);setIdY(data.id)});
     }
     useEffect(() => {  
         getPost();  
@@ -88,9 +102,137 @@ export default function PostSida(props){
                 return alert(stringrespons)         
             }     
         } 
-        fetchCreate(); 
+        fetchCreate();        
         } else alert("No message!"); 
     }
+
+    
+    function updatePost2(){   
+    
+        if(updatePostTitle === ""){     
+            setUpdatePostTitle(titleY);
+        } 
+        if(updatePost === ""){
+            setUpdatePost(messageY);            
+        }
+
+        if(updatePostTitle.length >1 && updatePost.length > 1){
+
+            async function fetchCreate(){          
+
+             const resp = await fetch('http://localhost:8080/post/updatepost', {
+                method: 'PUT',
+                headers: { 'token': props.token,
+                'id': props.id,
+                'Content-Type': 'application/json'
+            },
+                body: JSON.stringify({                
+                title: updatePostTitle,                
+                message: updatePost              
+                })
+            })
+            const stringrespons = await resp.text();
+            switch(resp.status) {
+                case 409:         
+                  alert(stringrespons)
+                break;
+                case 500:
+                alert(stringrespons)
+                break;
+            default:                   
+                return alert(stringrespons)         
+                }     
+            getPost();
+            } 
+        fetchCreate();     
+        } else alert("Empty message or title!")        
+
+    }
+
+    function deletePost(){
+        async function fetchCreate(){          
+
+            const resp = await fetch('http://localhost:8080/post/postdelete', {
+               method: 'DELETE',
+               headers: { 'token': props.token,
+               'id': idY,              
+           }
+           })
+           const stringrespons = await resp.text();
+           switch(resp.status) {
+               case 409:         
+                 alert(stringrespons)
+               break;
+               case 500:
+               alert(stringrespons)
+               break;
+           default:                   
+               return alert(stringrespons)         
+               }     
+           getPost();
+           } 
+       fetchCreate();  
+    }
+
+    function updateComment2(id){   
+            
+
+        if(updateComment.length > 1){
+
+            async function fetchCreate(){          
+
+             const resp = await fetch('http://localhost:8080/post/updatecomment', {
+                method: 'PUT',
+                headers: { 'token': props.token,
+                'idcomment': id,
+                'Content-Type': 'text/plain'
+            },
+                body: updateComment
+            })
+            const stringrespons = await resp.text();
+            switch(resp.status) {
+                case 409:         
+                  alert(stringrespons)
+                break;
+                case 500:
+                alert(stringrespons)
+                break;
+            default:                   
+                return alert(stringrespons)         
+                }     
+            getPost();
+            } 
+        fetchCreate();     
+        } else alert("Empty message or not updated!")        
+
+    }
+
+    function deleteComment2(id){
+        async function fetchCreate(){          
+
+            const resp = await fetch('http://localhost:8080/post/commentdelete', {
+               method: 'DELETE',
+               headers: { 'token': props.token,
+               'id': id,              
+           }
+           })
+           const stringrespons = await resp.text();
+           switch(resp.status) {
+               case 409:         
+                 alert(stringrespons)
+               break;
+               case 500:
+               alert(stringrespons)
+               break;
+           default:                   
+               return alert(stringrespons)         
+               }     
+           getPost();
+           } 
+       fetchCreate();  
+    }
+    
+
 
    function newC(i) {
         if(i){
@@ -104,19 +246,31 @@ export default function PostSida(props){
         } else return ``
     }
 
-    const showButton1 = (user) =>{
-        console.log(user);
-        console.log(props.sendPost.author);
+    const showButton1 = (user) =>{       
         if(user === props.sendPost.author && props.loggedIn === "logged in as: "+user){
             return ``
         }else return`hidden` 
     }
 
     const showButton2 = (user) =>{
-        if(user === props.sendPost.author){
-
-        }
+        if(user === props.user && props.loggedIn === "logged in as: "+user){
+            return ``
+        }else return`hidden` 
     }
+
+    const openTextArea = (user) => {
+        if(user === props.sendPost.author && props.loggedIn === "logged in as: "+user){
+            return ""
+        }else return "true" 
+    }
+
+    const openCommentTextArea = (user) => {        
+        if(user === props.user && props.loggedIn === "logged in as: "+user){
+            return ""
+        }else return "true" 
+    }
+
+    
 
     return (
         <div>  
@@ -127,24 +281,26 @@ export default function PostSida(props){
             <b className="voteSize"> {downvote} </b>
             <DownVoteX token={props.token} id={props.id} yesGo={yesGo} />
 
-           <span className="titleX2">{props.sendPost.title}</span>
+           <textarea readOnly={openTextArea(props.user)} className="titleX2" onChange={e => {setUpdatePostTitle(e.target.value)}}>{props.sendPost.title}</textarea>
            <span className="authorX2">{props.sendPost.author}</span>
            <span className="dateZ">{props.sendPost.date}</span>
-           <span className="messageZ">{props.sendPost.message}</span>
+           <textarea maxlength="700" readOnly={openTextArea(props.user)} className="editPostM" onChange={e => {setUpdatePost(e.target.value)}}>{props.sendPost.message}</textarea>
 
             </div>     
             <button onClick={e => {newComment()}}>new comment</button>      
-            <button className={showButton1(props.user)}> update post </button>
-            <button className={showButton1(props.user)}> delete post </button>
+            <button className={showButton1(props.user)} onClick={e => {updatePost2()}}> update post </button>
+            <button className={showButton1(props.user)} onClick={e => {deletePost()}}> delete post </button>
 
             {newC(newCommentX)}
 
              {comments.map((p,index) => <div key={p.id} index={index} className={changeBackgroundClassName()}>            
            <b className="titleX"> {p.commentAuthor} </b>
             <span className="commentDate">{p.date} </span>
-            {p.comment}
-            <button className={showButton2(props.user)}> update comment </button>
-            <button className={showButton2(props.user)}> delete comment </button>
+           
+            <textarea readOnly={openCommentTextArea(p.commentAuthor)} className={changeBackgroundClassName2()} onChange={e => {setUpdateComment(e.target.value)}}>{p.comment}</textarea>              
+
+            <button className={showButton2(p.commentAuthor)} onClick={e=>{updateComment2(p.id)}}> update comment </button>
+            <button className={showButton2(p.commentAuthor)} onClick={e=>{deleteComment2(p.id)}}> delete comment </button>
 
             </div>)} 
 
