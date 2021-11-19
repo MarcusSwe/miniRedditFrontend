@@ -100,7 +100,7 @@ function App() {
   function PrintaPostSida(){  
       return ( <div> 
           {topMenu()}
-          <PostSida sendPost={sendPost} token={token} id={idComment} user={user} setSida={setSida}/>
+          <PostSida loggedIn={loggedIn} sendPost={sendPost} token={token} id={idComment} user={user} setSida={setSida}/>
           </div>      
       )
   }

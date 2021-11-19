@@ -104,6 +104,20 @@ export default function PostSida(props){
         } else return ``
     }
 
+    const showButton1 = (user) =>{
+        console.log(user);
+        console.log(props.sendPost.author);
+        if(user === props.sendPost.author && props.loggedIn === "logged in as: "+user){
+            return ``
+        }else return`hidden` 
+    }
+
+    const showButton2 = (user) =>{
+        if(user === props.sendPost.author){
+
+        }
+    }
+
     return (
         <div>  
             <div className="fontX postWrapper2">
@@ -120,6 +134,8 @@ export default function PostSida(props){
 
             </div>     
             <button onClick={e => {newComment()}}>new comment</button>      
+            <button className={showButton1(props.user)}> update post </button>
+            <button className={showButton1(props.user)}> delete post </button>
 
             {newC(newCommentX)}
 
@@ -127,7 +143,9 @@ export default function PostSida(props){
            <b className="titleX"> {p.commentAuthor} </b>
             <span className="commentDate">{p.date} </span>
             {p.comment}
-                      
+            <button className={showButton2(props.user)}> update comment </button>
+            <button className={showButton2(props.user)}> delete comment </button>
+
             </div>)} 
 
       </div>
