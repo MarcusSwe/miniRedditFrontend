@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import './App.css';
 import UpVoteX from './upVoteX';
 import DownVoteX from './downVoteX';
+import FromTime from './fromTimeX';
 
 export default function PostSida(props){
 
@@ -40,7 +41,7 @@ export default function PostSida(props){
          }
         useEffect(() => {  
             getComments();                         
-        }, []);         
+        }, [omegaHook]);         
 
     function changeBackgroundClassName() {  
         if(background){
@@ -100,24 +101,19 @@ export default function PostSida(props){
                 alert(stringrespons)
                 break;
             default:                   
-                return alert(stringrespons)         
-            }             
-            yesGo();
+                alert(stringrespons)         
+            }    
+            getComments();                   
         } 
         fetchCreate();        
         } else alert("No message!"); 
+        yesGo();
     }
 
     
     function updatePost2(){   
-
-    
         if(updatePost.length >2 && updatePostTitle.length >2){
-
-            async function fetchCreate(){          
-
-                console.log("2222222222222222222222222222222")
-
+            async function fetchCreate(){   
              const resp = await fetch('http://localhost:8080/post/updatepost', {
                 method: 'PUT',
                 headers: { 'token': props.token,
@@ -143,8 +139,7 @@ export default function PostSida(props){
             getPost();
             } 
         fetchCreate();     
-        } else alert("Empty message or title!")        
-
+        } else alert("Empty message or title!")     
     }
 
     function deletePost(){
@@ -172,8 +167,7 @@ export default function PostSida(props){
        fetchCreate();  
     }
 
-    function updateComment2(id){   
-            
+    function updateComment2(id){               
 
         if(updateComment.length > 1){
 
@@ -202,7 +196,8 @@ export default function PostSida(props){
             } 
         fetchCreate();     
         } else alert("Empty message or not updated!")        
-
+        
+       
     }
 
     function deleteComment2(id){
@@ -228,6 +223,7 @@ export default function PostSida(props){
            getPost();
            } 
        fetchCreate();  
+       yesGo();
     }
     
 
@@ -268,6 +264,7 @@ export default function PostSida(props){
         }else return "true" 
     }
 
+   
     
 
     return (
@@ -281,7 +278,7 @@ export default function PostSida(props){
 
            <textarea value={updatePostTitle} readOnly={openTextArea(props.user)} className="titleX2" onChange={e => {setUpdatePostTitle(e.target.value)}}>{props.sendPost.title}</textarea>
            <span className="authorX2">{props.sendPost.author}</span>
-           <span className="dateZ">{props.sendPost.date}</span>
+           <span className="dateZ">{props.sendPost.date.substring(0,16)}</span>
            <textarea value={updatePost} maxlength="700" readOnly={openTextArea(props.user)} className="editPostM" onChange={e => {setUpdatePost(e.target.value)}}>{props.sendPost.message}</textarea>
           
 
@@ -294,7 +291,7 @@ export default function PostSida(props){
 
              {comments.map((p,index) => <div key={p.id} index={index} className={changeBackgroundClassName()}>            
            <b className="titleX"> {p.commentAuthor} </b>
-            <span className="commentDate">{p.date} </span>
+            <span className="commentDate">  <FromTime timeComment={p.date.substring(0,16)}/>   </span>
            
             <textarea readOnly={openCommentTextArea(p.commentAuthor)} className={changeBackgroundClassName2()} onChange={e => {setUpdateComment(e.target.value)}}>{p.comment}</textarea>              
 

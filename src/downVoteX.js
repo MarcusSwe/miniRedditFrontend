@@ -10,10 +10,9 @@ export default function downVote(props) {
           headers: { 'token': props.token,
           'id': props.id 
           }
-        })
-        props.yesGo();
-      }
-      
+        })       
+          props.changeVoteArrayDownvote(props.id);
+      }     
 
    return  (   <button className="buttonVote" onClick={e => {fetchDownVote()}}> 	&#x21E9; </button>)
             

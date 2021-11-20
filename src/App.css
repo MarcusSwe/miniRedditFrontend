@@ -97,6 +97,16 @@ input {
   position:relative;
 }
 
+.floatLeft {
+  position: relative;
+  float: right;  
+}
+
+.sortWrapper {
+  position: relative;
+  margin-bottom: 50px;
+}
+
 .authorX {
   font-size: 25px;
   padding-left: 40px;
