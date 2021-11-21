@@ -25,11 +25,7 @@ function App() {
   const [sortQ, setSortQ] = useState(false);
   let background = false;  
   let byTime = [];
-  let byUpVote = [];
-
-  const yesGo = () => {
-    callOmegaHook(!omegaHook);
-  }
+  let byUpVote = []; 
   
   function getPosts(){
     fetch('http://localhost:8080/post/all', {
@@ -40,7 +36,7 @@ function App() {
       });
   }
   useEffect(() => {  
-      getPosts();  
+      getPosts();        
   }, [omegaHook, sida]);
 
   function changeBackgroundClassName() {  
@@ -114,15 +110,15 @@ function App() {
 
   function sortX(){
     if(sortQ ===false){
-    byUpVote=[...posts];
-    byUpVote.sort(function(a, b){return b.upvote-a.upvote})
-    setPosts(byUpVote);
-    setSortQ(true);
-    console.log(sortQ);
+      byUpVote=[...posts];
+      byUpVote.sort(function(a, b){return b.upvote-a.upvote})
+      setPosts(byUpVote);
+      setSortQ(true);    
+      console.log(sortQ);
       } else {
-    setPosts(yup);
-    setSortQ(false);
-    console.log(sortQ);
+        setPosts(yup);
+        setSortQ(false); 
+        console.log(sortQ);  
       }
   } 
 
@@ -144,7 +140,7 @@ function App() {
   function PrintaMainSida(){    
     return  ( <div>
         {topMenu()}
-        <div className="sortWrapper"><button className="floatLeft" onClick={sortX}>bytime / upvote</button> <button className="fontX floatLeft" onClick={e =>{setSida(3)}}> New Post </button>  </div>
+        <div className="sortWrapper"><button className="floatLeft" onClick={e=> {sortX()}}>bytime / upvote</button> <button className="fontX floatLeft" onClick={e =>{setSida(3)}}> New Post </button>  </div>
         {posts.map((p,index) => <div key={p.id} index={index} className={changeBackgroundClassName()}><b className="voteSize">{p.upvote}</b>      
         <UpVoteX token={token} id={p.id} changeVoteArrayUpvote={changeVoteArrayUpvote}/>       
         <b className="voteSize"> {p.downvote} </b>

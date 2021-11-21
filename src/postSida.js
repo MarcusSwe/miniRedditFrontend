@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
-import UpVoteX from './upVoteX';
-import DownVoteX from './downVoteX';
+import UpVoteX from './upVoteX2';
+import DownVoteX from './downVoteX2';
 import FromTime from './fromTimeX';
 
 export default function PostSida(props){
@@ -79,6 +79,8 @@ export default function PostSida(props){
     function addComment(){
         if(newAddComment.length >0){        
             const dateX = new Date();
+            dateX.setHours(dateX.getHours()+1);
+            
             async function fetchCreate(){
              const resp = await fetch('http://localhost:8080/post/newcomment', {
                 method: 'POST',
