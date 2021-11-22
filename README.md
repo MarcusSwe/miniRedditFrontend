@@ -11,4 +11,4 @@ Fullstack exercise "minireddit" - react, springboot, mysql
 https://github.com/MarcusSwe/miniRedditBackend
 https://github.com/MarcusSwe/miniRedditFrontend
 
-![alt text](https://i.imgur.com/5oHxqlD.png)
+![alt text](https://i.imgur.com/xJJCaBS.png)

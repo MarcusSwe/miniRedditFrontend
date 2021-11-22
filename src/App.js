@@ -177,9 +177,8 @@ function App() {
         {posts.map((p,index) => <div key={p.id} index={index} className={changeBackgroundClassName()}><b className="voteSize">{p.upvote}</b>      
         <UpVoteX token={token} id={p.id} changeVoteArrayUpvote={changeVoteArrayUpvote}/>       
         <b className="voteSize"> {p.downvote} </b>
-        <DownVoteX token={token} id={p.id} changeVoteArrayDownvote={changeVoteArrayDownvote}/>
-        <span className="dateY"><FromTime timeComment={p.date.substring(0,16)}/></span>   
-        <span className="postWrapperO"><span className="titleX">{p.title}</span>  <span className="authorX">{p.author}</span><span className="messageP"> {cutMessage(p.message)}</span></span>
+        <DownVoteX token={token} id={p.id} changeVoteArrayDownvote={changeVoteArrayDownvote}/>        
+        <span className="postWrapperO"><span className="titleX">{p.title}</span> <span className="dateY"><FromTime timeComment={p.date.substring(0,16)}/></span>    <span className="authorX">{p.author}</span><span className="messageP"> {cutMessage(p.message)}</span></span>
         <button className="readButton" onClick={e =>{setSendPost(p); setIdComment(p.id);  setSida(2)}}> r e a d </button>
     </div>)}       
     </div>
