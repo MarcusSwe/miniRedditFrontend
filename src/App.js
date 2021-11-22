@@ -7,6 +7,7 @@ import UpVoteX from './upVoteX';
 import DownVoteX from './downVoteX';
 import PostSida from './postSida';
 import NewPost from './newPost';
+import FromTime from './fromTimeX';
 import TestXX from './testX';
 import TestYY from './testY';
 
@@ -26,7 +27,8 @@ function App() {
   let background = false;  
   let byTime = [];
   let byUpVote = []; 
-  
+
+
   function getPosts(){
     fetch('http://localhost:8080/post/all', {
       method: 'GET'    
@@ -35,8 +37,36 @@ function App() {
       .then(data =>{byTime=[...data];byTime.reverse();setPosts(byTime); setYup(byTime);
       });
   }
+
+  function checkAuth(){
+    let token = localStorage.token;    
+    if(token in window){      
+      }else{
+        fetch('http://localhost:8080/user/auth', {
+          method: 'POST',
+          headers: {           
+          'Content-Type': 'text/plain'
+      },
+          body: token
+        }).then(resp => resp.text()).
+           then(data => {if(data==="not logged in"){
+              setLoggedIn("not logged in");
+              setToken("");
+              localStorage.removeItem("token");
+              } else { 
+                setLoggedIn("logged in as: " +data);                
+                setPassword("sdasdfasdf");
+                setToken(token);     
+                setUser(data);              
+              }
+            }
+          )
+        } 
+    }
+
   useEffect(() => {  
-      getPosts();        
+      getPosts();     
+      checkAuth();        
   }, [omegaHook, sida]);
 
   function changeBackgroundClassName() {  
@@ -126,11 +156,11 @@ function App() {
     return (
       <div className="fontX"><img src="https://fontmeme.com/permalink/211116/662e47978ea0ad4aa807207649683392.png" 
         alt="graffiti-creator" border="0" onClick={e =>{setSida(1)}}/>
-        <b className="moveUp"> Name: <input type="text" name="username" onChange={e => {setUser(e.target.value)}}/>
-        Password: <input type="password" name="password" onChange={e => {setPassword(e.target.value)}}/>
+        <b className="moveUp"> Name: <input value={user} type="text" name="username" onChange={e => {setUser(e.target.value)}}/>
+        Password: <input value={password} type="password" name="password" onChange={e => {setPassword(e.target.value)}}/>
         <LoginUserX setTok={setToken} setLogIn={setLoggedIn} user={user} password={password}/>
         <button className="fontX" onClick={e =>{AddUserX(user, password)}}> Register </button>          
-        <LogOffUserX token={token} user={user} setTok={setToken} setLogIn={setLoggedIn}/>    
+        <LogOffUserX token={token} user={user} setTok={setToken} setLogIn={setLoggedIn} setPassword={setPassword} setUser={setUser}/>    
         {loggedIn}    
       </b>  
       </div>    
@@ -145,7 +175,7 @@ function App() {
         <UpVoteX token={token} id={p.id} changeVoteArrayUpvote={changeVoteArrayUpvote}/>       
         <b className="voteSize"> {p.downvote} </b>
         <DownVoteX token={token} id={p.id} changeVoteArrayDownvote={changeVoteArrayDownvote}/>
-        <b className="titleX">{p.title} </b>  <b className="authorX">{p.author}</b> {cutMessage(p.message)} <span className="dateY">{p.date.substring(0,16)}</span>   
+        <b className="titleX">{p.title} </b>  <b className="authorX">{p.author}</b> {cutMessage(p.message)} <span className="dateY"><FromTime timeComment={p.date.substring(0,16)}/></span>   
         <button className="readButton" onClick={e =>{setSendPost(p); setIdComment(p.id);  setSida(2)}}> r e a d </button>
     </div>)}       
     </div>

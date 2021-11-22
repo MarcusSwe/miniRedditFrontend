@@ -36,11 +36,11 @@ export default function FromTime(props){
         return <span>Submitted {minutes} minutes ago!</span>
       } else if(differenceInTime > hourInMS && differenceInTime<dayInMS){
            return <span>Submitted {hours} hours ago!</span>
-        } else if(differenceInTime > dayInMS && differenceInTime < months){
+        } else if(differenceInTime > dayInMS && differenceInTime < monthInMS){
             return <span>Submitted {days} days ago!</span>
-            } else if(differenceInTime > months && differenceInTime < years){
+            } else if(differenceInTime > monthInMS && differenceInTime < yearInMS){
                 return <span>Submitted {months} months ago!</span>
-                } else if(differenceInTime > years){
+                } else if(differenceInTime > yearInMS){
                     return <span>Submitted {years} years ago!</span>
                     } else return <span>Submitted unknown time ago!</span>
 

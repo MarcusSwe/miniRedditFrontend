@@ -19,7 +19,8 @@ export default function loginUser(props) {
       if(resp.status===406){        
         alert("something went wrong");        
       } else {    
-        props.setTok(tokenstring);      
+        props.setTok(tokenstring);  
+        localStorage.setItem("token", tokenstring);
         props.setLogIn("logged in as: " + props.user);
       }
     }

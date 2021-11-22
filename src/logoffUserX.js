@@ -14,7 +14,10 @@ export default function logoffUser(props) {
             })
            }) 
            props.setTok("");
+           localStorage.removeItem("token");
            props.setLogIn("not logged in");     
+           props.setUser("");
+           props.setPassword("");
           }
           else alert("not logged in!")
         }

@@ -8,7 +8,8 @@ export default function NewPost(props){
 
     function createPost() {
 
-       const dateX = new Date();
+        const dateX = new Date();
+        dateX.setHours(dateX.getHours()+1);
 
         if(title.length > 0 && message.length >0){
         
