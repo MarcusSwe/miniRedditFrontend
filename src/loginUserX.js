@@ -25,7 +25,7 @@ export default function loginUser(props) {
       }
     }
 
-   return  ( <button className="fontX" onClick={e => {fetchLogin()}}>
+   return  ( <button onClick={e => {fetchLogin()}}>
    Login</button>)
             
   }

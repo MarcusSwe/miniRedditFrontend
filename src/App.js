@@ -81,7 +81,7 @@ function App() {
 
   function cutMessage(y){
       let message = y;     
-      let trimmedMessage = message.substring(0, 25);
+      let trimmedMessage = message.substring(0, 40);
       return trimmedMessage+"...";
   }
 
@@ -154,15 +154,18 @@ function App() {
 
   function topMenu(){
     return (
-      <div className="fontX"><img src="https://fontmeme.com/permalink/211116/662e47978ea0ad4aa807207649683392.png" 
-        alt="graffiti-creator" border="0" onClick={e =>{setSida(1)}}/>
-        <b className="moveUp"> Name: <input value={user} type="text" name="username" onChange={e => {setUser(e.target.value)}}/>
+      <div className="fontX"><img className="imageX" src="https://fontmeme.com/permalink/211120/a6d8f43f3298ce6b7d78195eb5c792db.png" 
+        alt="graffiti-creator" border="0" onClick={e =>{setSida(1)}}/>       
+       <div className="loginFieldWrapper">
+         Name: <input value={user} type="text" name="username" onChange={e => {setUser(e.target.value)}}/>        
         Password: <input value={password} type="password" name="password" onChange={e => {setPassword(e.target.value)}}/>
+        </div>
+        <div className="loggedInWrapper">
         <LoginUserX setTok={setToken} setLogIn={setLoggedIn} user={user} password={password}/>
-        <button className="fontX" onClick={e =>{AddUserX(user, password)}}> Register </button>          
+        <button onClick={e =>{AddUserX(user, password)}}> Register </button>          
         <LogOffUserX token={token} user={user} setTok={setToken} setLogIn={setLoggedIn} setPassword={setPassword} setUser={setUser}/>    
         {loggedIn}    
-      </b>  
+        </div>      
       </div>    
     )
   } 
@@ -170,12 +173,13 @@ function App() {
   function PrintaMainSida(){    
     return  ( <div>
         {topMenu()}
-        <div className="sortWrapper"><button className="floatLeft" onClick={e=> {sortX()}}>bytime / upvote</button> <button className="fontX floatLeft" onClick={e =>{setSida(3)}}> New Post </button>  </div>
+        <div className="sortWrapper"><button className="floatLeft" onClick={e=> {sortX()}}>bytime / upvote</button> <button className="fontX floatLeft" onClick={e =>{setSida(3)}}> New Post </button></div>     
         {posts.map((p,index) => <div key={p.id} index={index} className={changeBackgroundClassName()}><b className="voteSize">{p.upvote}</b>      
         <UpVoteX token={token} id={p.id} changeVoteArrayUpvote={changeVoteArrayUpvote}/>       
         <b className="voteSize"> {p.downvote} </b>
         <DownVoteX token={token} id={p.id} changeVoteArrayDownvote={changeVoteArrayDownvote}/>
-        <b className="titleX">{p.title} </b>  <b className="authorX">{p.author}</b> {cutMessage(p.message)} <span className="dateY"><FromTime timeComment={p.date.substring(0,16)}/></span>   
+        <span className="dateY"><FromTime timeComment={p.date.substring(0,16)}/></span>   
+        <span className="postWrapperO"><span className="titleX">{p.title}</span>  <span className="authorX">{p.author}</span><span className="messageP"> {cutMessage(p.message)}</span></span>
         <button className="readButton" onClick={e =>{setSendPost(p); setIdComment(p.id);  setSida(2)}}> r e a d </button>
     </div>)}       
     </div>

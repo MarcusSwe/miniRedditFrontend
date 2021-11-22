@@ -23,7 +23,7 @@ export default function logoffUser(props) {
         }
     
 
-   return  ( <button className="fontX" onClick={e => {fetchLogOff()}}>
+   return  ( <button onClick={e => {fetchLogOff()}}>
    Logoff</button>)
             
   }

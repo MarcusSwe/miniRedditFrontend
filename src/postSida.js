@@ -292,7 +292,7 @@ export default function PostSida(props){
             {newC(newCommentX)}
 
              {comments.map((p,index) => <div key={p.id} index={index} className={changeBackgroundClassName()}>            
-           <b className="titleX"> {p.commentAuthor} </b>
+           <b className="titleXY"> {p.commentAuthor} </b>
             <span className="commentDate">  <FromTime timeComment={p.date.substring(0,16)}/>   </span>
            
             <textarea readOnly={openCommentTextArea(p.commentAuthor)} className={changeBackgroundClassName2()} onChange={e => {setUpdateComment(e.target.value)}}>{p.comment}</textarea>              
